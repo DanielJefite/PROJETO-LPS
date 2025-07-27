@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Consultório{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f8f9fa; /* bg-light padrão bootstrap */
+    }
+    .container {
+      flex: 1 0 auto; /* Conteúdo principal cresce e ocupa o espaço disponível */
+    }
+    footer {
+      flex-shrink: 0; /* Não encolhe */
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">ConsultórioMed</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'lista_prontuarios' %}">Prontuário</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'lista_produtos' %}">Cadastro de Produtos</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'pendencias' %}">Pendências</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'historico_medico' %}">Histórico Médico</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Sair</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    {% block content %}
+    <!-- Conteúdo individual das páginas -->
+    {% endblock %}
+  </div>
+
+  <footer class="bg-primary text-white text-center py-3 mt-auto">
+    &copy; 2025 ConsultórioMed. Todos os direitos reservados.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

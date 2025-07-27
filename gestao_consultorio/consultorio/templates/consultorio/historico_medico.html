@@ -1,0 +1,61 @@
+{% extends 'consultorio/base.html' %}
+
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4">Histórico Médico</h2>
+
+  <!-- Formulário para selecionar paciente -->
+  <form method="get" class="row g-3 mb-4">
+    <div class="col-md-6">
+      <label for="paciente" class="form-label">Selecione o Paciente</label>
+      <select class="form-select" name="paciente" id="paciente" onchange="this.form.submit()">
+        <option value="">-- Escolha um paciente --</option>
+        {% for p in pacientes %}
+          <option value="{{ p.id }}" {% if p.id|stringformat:"s" == paciente_selecionado %}selected{% endif %}>{{ p.nome }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </form>
+
+  {% if paciente_selecionado %}
+    <!-- Seção de Consultas -->
+    <div class="mb-5">
+      <h4 class="text-primary">Consultas Recentes</h4>
+      {% if consultas %}
+        <div class="list-group">
+          {% for consulta in consultas %}
+            <div class="list-group-item">
+              <div><strong>Médico:</strong> {{ consulta.medico.nome }}</div>
+              <div><strong>Data:</strong> {{ consulta.data_hora|date:"d/m/Y H:i" }}</div>
+              {% if consulta.descricao %}
+                <div><strong>Descrição:</strong> <span class="text-muted">{{ consulta.descricao }}</span></div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-muted">Nenhuma consulta registrada.</p>
+      {% endif %}
+    </div>
+
+    <!-- Seção de Prontuários -->
+    <div>
+      <h4 class="text-primary">Prontuários</h4>
+      {% if prontuarios %}
+        <div class="list-group">
+          {% for prontuario in prontuarios %}
+            <div class="list-group-item">
+              <div><strong>Data:</strong> {{ prontuario.data|date:"d/m/Y" }}</div>
+              <div><strong>Diagnóstico:</strong> <span class="text-muted">{{ prontuario.diagnostico }}</span></div>
+              <div><strong>Prescrição:</strong> <span class="text-muted">{{ prontuario.prescricao }}</span></div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-muted">Nenhum prontuário registrado.</p>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lista de Produtos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h2 class="mb-4">Produtos Cadastrados</h2>
+
+    {% if produtos %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Preço</th>
+          <th>Quantidade</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produto in produtos %}
+        <tr>
+          <td>{{ produto.nome }}</td>
+          <td>{{ produto.descricao }}</td>
+          <td>R$ {{ produto.preco }}</td>
+          <td>{{ produto.quantidade }}</td>
+          <td>
+            <a href="{% url 'editar_produto' produto.id %}" class="btn btn-sm btn-warning">Editar</a>
+            <a href="{% url 'excluir_produto' produto.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este produto?');">Excluir</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>Nenhum produto cadastrado.</p>
+    {% endif %}
+
+    <a href="{% url 'cadastrar_produto' %}" class="btn btn-primary mt-3">Novo Produto</a>
+    <a href="{% url 'index' %}" class="btn btn-secondary mt-3">Voltar</a>
+  </div>
+</body>
+</html>

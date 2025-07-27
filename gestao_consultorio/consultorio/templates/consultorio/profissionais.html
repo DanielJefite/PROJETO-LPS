@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Profissionais</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h2 class="mb-4">Profissionais do Consultório</h2>
+
+    {% if profissionais %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Especialidade</th>
+          <th>Email</th>
+          <th>Telefone</th>
+          <th>Ações</th> <!-- Nova coluna para ações -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for profissional in profissionais %}
+        <tr>
+          <td>{{ profissional.nome }}</td>
+          <td>{{ profissional.especialidade }}</td>
+          <td>{{ profissional.email }}</td>
+          <td>{{ profissional.telefone }}</td>
+          <td>
+            <a href="{% url 'editar_profissional' profissional.id %}" class="btn btn-sm btn-warning">Editar</a>
+            <a href="{% url 'excluir_profissional' profissional.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este profissional?');">Excluir</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>Nenhum profissional cadastrado.</p>
+    {% endif %}
+
+    <!-- Botões lado a lado alinhados à esquerda -->
+    <div class="d-flex justify-content-start gap-2 mt-3">
+      <a href="{% url 'cadastrar_profissional' %}" class="btn btn-primary">Novo Profissional</a>
+      <a href="{% url 'index' %}" class="btn btn-secondary">Voltar</a>
+    </div>
+  </div>
+</body>
+</html>
